@@ -1,15 +1,13 @@
 import LetterFrameState from "../enums/LetterFrameState";
 import ILetterFrame from "../types/ILetterFrame";
+import IWordFrame from "../types/IWordFrame";
 
-class NextWordFrame implements ILetterFrame {
-    content: string;
-    state: LetterFrameState;
-    disable: boolean;
+class WordFrame implements IWordFrame {
+    word: string;
+    columns: number;
 
     constructor() {
-        this.content = '';
-        this.state = LetterFrameState.Wrong;
-        this.disable = false;
+        this.word = "";
+        this.columns = 5;
       }
-
 }
