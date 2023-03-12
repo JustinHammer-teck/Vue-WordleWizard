@@ -1,3 +1,7 @@
+# Wordle VueVizard
+
+[![wakatime](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/173b4103-418d-4c11-a8e7-f6f517f66672.svg)](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/173b4103-418d-4c11-a8e7-f6f517f66672)
+
 # Vue 3 + TypeScript + Vite
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.

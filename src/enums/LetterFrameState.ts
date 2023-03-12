@@ -1,6 +1,7 @@
 enum LetterFrameState {
-    Correct,
-    Wrong,
+    CorrectPlc,
+    MissPlc,
+    Wrong
 }
 
 export default LetterFrameState
