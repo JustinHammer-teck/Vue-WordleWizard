@@ -1,9 +1,3 @@
-<template>
-  <div class="w-10 h-10 max-w-10 max-h-10 flex justify-center items-center pointer-events-auto border border-slate-400 " >
-    <span class="text-center text-xl font-bold mb-px">{{ letterFrame.content }}</span>
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import LetterFrameState from '../enums/LetterFrameState';
@@ -23,6 +17,13 @@ export default defineComponent({
     }
 })
 </script>
+
+<template>
+  <div class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
+    <span class="text-2xl font-bold">{{ letterFrame.content }}</span>
+  </div>
+</template>
+
 
 <style scoped>
 
