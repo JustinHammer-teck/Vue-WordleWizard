@@ -26,9 +26,9 @@ export default defineComponent({
 </script>
 
 <template>
-        <div class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200"
-        :class="{ 'bg-green-600': isCrtPLace, 'bg-amber-600': isMissPlc, 'bg-sky-600': isWrong }">
-    <span class="text-2xl font-bold">{{ letterFrame.content }}</span>
+  <div :class="{ 'bg-lime-500/70': isCrtPLace, 'bg-amber-400/75': isMissPlc, 'bg-sky-600/50': isWrong }" 
+    class="col-span-1 flex items-center justify-center w-14 h-14 uppercase border-solid border-2 border-gray-700/25">
+    <span class="text-2xl font-bold text-gray-100">{{ letterFrame.content }}</span>
   </div>
 </template>
 

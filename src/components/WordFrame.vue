@@ -19,11 +19,10 @@ export default defineComponent({
     }
 })
 
-
 </script>
 
 <template>
-    <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
+    <div class="grid max-w-full grid-cols-5 gap-x-px mb-0.5 justify-end">
         <LetterFrame v-for="(value, index) in values" :key=index :letterFrame="value" />
     </div>
 </template>    
