@@ -1,13 +1,19 @@
 import LetterFrameState from "../enums/LetterFrameState";
-import ILetterFrame from "../types/ILetterFrame";
 import IWordFrame from "../types/IWordFrame";
 
 class WordFrame implements IWordFrame {
-    word: string;
-    columns: number;
+    guess: string;
+    correctness: Array<LetterFrameState>;
 
     constructor() {
-        this.word = "";
-        this.columns = 5;
+        this.guess = "";
+        this.correctness = [
+          LetterFrameState.Wrong, 
+          LetterFrameState.Wrong, 
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong
+        ];
       }
+
 }

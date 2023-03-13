@@ -1,12 +1,15 @@
 <template>
-  <div class="app">
-        <div class="flex flex-col h-screen max-w-md mx-auto justify-evenly">
-          <div>
-            <WordFrame v-for="(guess, i) in stage.guesses" v-bind:values="letterFrames" />
-          </div>
-          <Keyboard onKeyPress="handleInput" />
-        </div>
+    <div class="app">
+      <div>
+        
       </div>
+      <div class="flex flex-col h-screen max-w-md mx-auto justify-evenly">
+        <div>
+          <WordFrame v-for="(guess, i) in stage.guesses" v-bind:values="letterFrames" />
+        </div>
+        <Keyboard onKeyPress="handleInput" />
+      </div>
+    </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from 'vue';
@@ -49,6 +52,10 @@ export default defineComponent({
 
     function handleInput(key: any) {
       console.log(key);
+    }
+
+    function createGuess(guess: String, correctness: Array<LetterFrameState>){
+
     }
 
     onMounted(() => {

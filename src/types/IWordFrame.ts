@@ -1,4 +1,6 @@
+import LetterFrameState from "../enums/LetterFrameState";
+
 export default interface IWordFrame{
-    word : string;
-    columns: number;
+    guess : string;
+    correctness :  Array<LetterFrameState>;
 }
