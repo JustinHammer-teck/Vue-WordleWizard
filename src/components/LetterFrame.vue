@@ -5,21 +5,29 @@ import ILetterFrame from '../types/ILetterFrame';
 
 export default defineComponent({
     props: {
-        letterFrame: {
-            required: true,
-            type: Object as PropType<ILetterFrame>
-        }
-    },
-    setup(props) {  
-
-      return {
-      }
+    letterFrame: {
+      required: true,
+      type: Object as PropType<ILetterFrame>
     }
+  },
+  setup(props) {
+    let isCrtPLace = props.letterFrame.state === LetterFrameState.CorrectPlc;
+    let isMissPlc = props.letterFrame.state === LetterFrameState.MissPlc;
+    let isWrong = props.letterFrame.state === LetterFrameState.Wrong;
+
+
+    return {
+      isCrtPLace,
+      isMissPlc,
+      isWrong
+    }
+  }
 })
 </script>
 
 <template>
-  <div class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
+        <div class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200"
+        :class="{ 'bg-green-600': isCrtPLace, 'bg-amber-600': isMissPlc, 'bg-sky-600': isWrong }">
     <span class="text-2xl font-bold">{{ letterFrame.content }}</span>
   </div>
 </template>
