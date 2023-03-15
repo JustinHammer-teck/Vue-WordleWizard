@@ -23,7 +23,7 @@ export default defineComponent({
   components: { WordFrame, Keyboard },
   setup() {
     const stage = reactive({
-      "guesses": ["", "", "", "", "", ""],
+      "guesses": [],
       "currentIndex": 0
     });
 
@@ -63,10 +63,17 @@ export default defineComponent({
           key = e.key;
           break;
       }
-      keyHandler(key);
+
+      if (key == "{enter}") {
+        //Send to API 
+      } else if (key == "{bksp}") {
+        stage.guesses.slice(0, -1);
+      } else if (stage.guesses.length < 5) {
+        alphaKeyHandler(key);
+      }
     };
 
-    function keyHandler(key: any) {
+    function alphaKeyHandler(key: any) {
       const alphaKeys = /[a-zA-Z]/;
       
       if(alphaKeys.test(key)){
