@@ -7,9 +7,9 @@
         <div>
           <WordFrame v-for="(guess, i) in stage.guesses" v-bind:values="letterFrames" />
         </div>
-        <Keyboard onKeyPress="handleInput" />
+          <Keyboard @keyup.prevent="handleInput" />
+        </div>
       </div>
-    </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from 'vue';
@@ -50,35 +50,35 @@ export default defineComponent({
     },
     ]);
 
-    function handleInput(key: any) {
-      console.log(key);
+    const handleInput = (e: any) => {
+      let key: any = '';
+      switch (e.key) {
+        case "Backspace":
+          key = "{bksp}";
+          break;
+        case "Enter":
+          key = "{enter}";
+          break;
+        default:
+          key = e.key;
+          break;
+      }
+      keyHandler(key);
+    };
+
+    function keyHandler(key: any) {
+      const alphaKeys = /[a-zA-Z]/;
+      
+      if(alphaKeys.test(key)){
+        console.log(key);
+      }
     }
 
-    function createGuess(guess: String, correctness: Array<LetterFrameState>){
+    // function createGuess(guess: String, correctness: Array<LetterFrameState>){
 
-    }
+    // }
 
-    onMounted(() => {
-      window.addEventListener("keyup", (e) => {
-        e.preventDefault();
-        let key: any = '';
-        switch (e.key) {
-          case "Backspace":
-            key = "{bksp}";
-            break;
-          case "Enter":
-            key = "{enter}";
-            break;
-          default:
-            key = e.key;
-            break;
-        }
-        handleInput(key);
-      });
-    });
-
-
-    return { letterFrames, stage }
+    return { letterFrames, stage, handleInput }
   }
 })
 </script>
