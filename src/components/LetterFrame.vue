@@ -4,7 +4,7 @@ import LetterFrameState from '../enums/LetterFrameState';
 import ILetterFrame from '../types/ILetterFrame';
 
 export default defineComponent({
-    props: {
+  props: {
     letterFrame: {
       required: true,
       type: Object as PropType<ILetterFrame>

@@ -17,12 +17,13 @@ import WordFrame from './components/WordFrame.vue';
 import ILetterFrame from './types/ILetterFrame';
 import LetterFrameState from './enums/LetterFrameState';
 import Keyboard from './components/Keyboard.vue';
+import IWordleStage from './types/IWordleStage';
 
 export default defineComponent({
   name: "App",
   components: { WordFrame, Keyboard },
   setup() {
-    const stage = reactive({
+    const stage : IWordleStage = reactive({
       "guesses": [],
       "currentIndex": 0
     });
@@ -50,8 +51,8 @@ export default defineComponent({
     },
     ]);
 
-    const handleInput = (e: any) => {
-      let key: any = '';
+    function handleInput(e: KeyboardEvent) : void {
+      let key: string = '';
       switch (e.key) {
         case "Backspace":
           key = "{bksp}";
@@ -73,7 +74,7 @@ export default defineComponent({
       }
     };
 
-    function alphaKeyHandler(key: any) {
+    function alphaKeyHandler(key: any) : void{
       const alphaKeys = /[a-zA-Z]/;
       
       if(alphaKeys.test(key)){
