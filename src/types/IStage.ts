@@ -1,4 +1,6 @@
+import LetterFrameState from "../enums/LetterFrameState"
+
 export default interface IStage{
     guesses: string
-    correctness: string
+    correctness: Array<LetterFrameState>
 }

@@ -5,53 +5,39 @@
       </div>
       <div class="flex flex-col h-screen max-w-md mx-auto justify-evenly">
         <div>
-          <WordFrame v-for="(guess, i) in stage.guesses" v-bind:values="letterFrames" />
-        </div>
-          <Keyboard @keyup.prevent="handleInput" />
+              <WordFrame v-for="(value, index) in stage.stageValue" :key=index  v-bind:letterFrames="value" />
+            </div >
+            <Keyboard @keyup.prevent="handleInput" @onKeyPress="handleInput"/>
         </div>
       </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from 'vue';
 import WordFrame from './components/WordFrame.vue';
-import ILetterFrame from './types/ILetterFrame';
-import LetterFrameState from './enums/LetterFrameState';
 import Keyboard from './components/Keyboard.vue';
 import IWordleStage from './types/IWordleStage';
+import LetterFrameState from './enums/LetterFrameState';
 
 export default defineComponent({
   name: "App",
   components: { WordFrame, Keyboard },
   setup() {
-    const stage : IWordleStage = reactive({
-      "guesses": [],
-      "currentIndex": 0
+    let stage: IWordleStage = reactive({
+      "currentIndex": 0,
+      "currentStage": {
+        guesses: "CRANE",
+        correctness: [
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong,
+          LetterFrameState.Wrong
+        ]
+      },
+      "stageValue": []
     });
 
-    const letterFrames = ref<Array<ILetterFrame>>([{
-      content: 'C',
-      state: LetterFrameState.Wrong,
-      disable: true
-    }, {
-      content: 'R',
-      state: LetterFrameState.Wrong,
-      disable: true
-    }, {
-      content: 'A',
-      state: LetterFrameState.Wrong,
-      disable: true
-    }, {
-      content: 'N',
-      state: LetterFrameState.Wrong,
-      disable: true
-    }, {
-      content: 'E',
-      state: LetterFrameState.Wrong,
-      disable: true
-    },
-    ]);
-
-    function handleInput(e: KeyboardEvent) : void {
+    function handleInput(e: KeyboardEvent): void {
       let key: string = '';
       switch (e.key) {
         case "Backspace":
@@ -66,27 +52,29 @@ export default defineComponent({
       }
 
       if (key == "{enter}") {
-        //Send to API 
+        stage.stageValue.push(stage.currentStage);
+        console.log(stage);
       } else if (key == "{bksp}") {
-        stage.guesses.slice(0, -1);
-      } else if (stage.guesses.length < 5) {
+        stage.currentStage.guesses.slice(0, -1);
+        stage.currentStage.correctness.slice(0, -1);
+      } else if (stage.currentStage.guesses.length < 5) {
         alphaKeyHandler(key);
       }
     };
 
-    function alphaKeyHandler(key: any) : void{
+    function alphaKeyHandler(key: any): void {
       const alphaKeys = /[a-zA-Z]/;
-      
-      if(alphaKeys.test(key)){
-        console.log(key);
+
+      if (alphaKeys.test(key)) {
+        console.log("pushed");
       }
     }
 
-    // function createGuess(guess: String, correctness: Array<LetterFrameState>){
+    // function processGuess(){
 
     // }
 
-    return { letterFrames, stage, handleInput }
+    return { stage, handleInput }
   }
 })
 </script>
