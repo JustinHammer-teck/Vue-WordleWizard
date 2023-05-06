@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted, defineEmits } from 'vue';
+import {defineComponent, ref, onMounted, defineEmits, watch} from 'vue';
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 
@@ -18,12 +18,14 @@ export default defineComponent({
 
         function OnKeyPress(button: any) {
             ctx.emit('onKeyPress', button);
-            console.log(button);
+            console.log("on press : " + button);
         }
 
         function OnChange(input: string) {
-            ctx.emit('onChange', input);
-            console.log(input);
+            if (input.length < 6) {
+                ctx.emit('onChange', input);
+            }
+            console.log("on change : " + input);
         }
 
         onMounted(() => {
@@ -40,6 +42,7 @@ export default defineComponent({
                 onKeyPress: OnKeyPress
             });
         });
+
     }
 })
 </script>
