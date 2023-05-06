@@ -11,7 +11,6 @@ export default defineComponent({
         }
     },
     setup(props) {
-
         let isCrtPLace = props.letterFrame.state === LetterFrameState.CorrectPlc;
         let isMissPlc = props.letterFrame.state === LetterFrameState.MissPlc;
         let isWrong = props.letterFrame.state === LetterFrameState.Wrong;

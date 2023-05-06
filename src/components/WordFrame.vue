@@ -1,5 +1,5 @@
 <script lang="ts">
-import {reactive, computed, PropType, defineComponent, ComputedRef} from 'vue';
+import {computed, PropType, defineComponent, ComputedRef} from 'vue';
 import LetterFrame from './LetterFrame.vue';
 import ILetterFrame from '../types/ILetterFrame';
 import IWordGuess from '../types/IWordGuess';
@@ -7,31 +7,23 @@ import IWordGuess from '../types/IWordGuess';
 export default defineComponent({
     components: {LetterFrame},
     props: {
-        letterFrames: {
+        value: {
             required: true,
             type: Object as PropType<IWordGuess>
         },
     },
     setup(props) {
-        let stage : IWordGuess = reactive({
-            guess: props.letterFrames.guess,
-            correctness: props.letterFrames.correctness
-        })
-
         const letterFrameValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
-            let guessLetters: Array<string> = stage.guess.split('');
-            let result: Array<ILetterFrame> = guessLetters.map((x, i) => {
+            let result: Array<ILetterFrame> = props.value.correctness.map((x, i) => {
                 return {
-                    "content": x ,
-                    "state": stage.correctness[i]
+                    "content": props.value.guess[i],
+                    "state": x
                 }
             });
 
             return result;
         });
-
         return {
-            stage,
             letterFrameValue
         }
     }
