@@ -1,30 +1,28 @@
 <script lang="ts">
-import { reactive, computed, PropType, defineComponent } from 'vue';
+import {reactive, computed, PropType, defineComponent, ComputedRef} from 'vue';
 import LetterFrame from './LetterFrame.vue';
 import ILetterFrame from '../types/ILetterFrame';
-import IStage from '../types/IStage';
-import LetterFrameState from '../enums/LetterFrameState';
+import IWordGuess from '../types/IWordGuess';
 
 export default defineComponent({
-    components: { LetterFrame },
+    components: {LetterFrame},
     props: {
         letterFrames: {
             required: true,
-            type: Object as PropType<IStage>
+            type: Object as PropType<IWordGuess>
         },
     },
     setup(props) {
-        let stage = reactive({
-            guesses: props.letterFrames.guesses,
+        let stage : IWordGuess = reactive({
+            guess: props.letterFrames.guess,
             correctness: props.letterFrames.correctness
         })
 
-        console.log(stage);
-        const letterFrames = computed(() => {
-            var guessLetters: Array<string> = stage.guesses.split('');
-            var result : Array<ILetterFrame> = guessLetters.map((x, i) => {
+        const letterFrameValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
+            let guessLetters: Array<string> = stage.guess.split('');
+            let result: Array<ILetterFrame> = guessLetters.map((x, i) => {
                 return {
-                    "content": x,
+                    "content": x ,
                     "state": stage.correctness[i]
                 }
             });
@@ -34,7 +32,7 @@ export default defineComponent({
 
         return {
             stage,
-            letterFrames
+            letterFrameValue
         }
     }
 })
@@ -43,7 +41,7 @@ export default defineComponent({
 </script>
 
 <template>
-        <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-            <LetterFrame v-for="(value, index) in letterFrames" :key=index :letterFrame="value" />
+    <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
+        <LetterFrame v-for="(value, index) in letterFrameValue" :key=index :letterFrame="value"/>
     </div>
 </template>    

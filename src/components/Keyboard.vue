@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted, defineEmits, watch } from 'vue';
+import {defineComponent, ref, onMounted, defineEmits, watch} from 'vue';
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 

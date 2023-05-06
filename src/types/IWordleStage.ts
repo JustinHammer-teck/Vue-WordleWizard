@@ -1,7 +1,7 @@
-import IStage from "./IStage";
+import IWordGuess from "./IWordGuess";
 
 export default interface IWordleStage {
     currentIndex: number,
-    currentStage : IStage
-    stageValue: Array<IStage>
+    currentStage : IWordGuess
+    stageValue: Array<IWordGuess>
 }
