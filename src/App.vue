@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div>
-                <WordFrame v-for="(value, index) in stage.stageValue" :key=index v-bind:letterFrames="value"/>
+                <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
             </div>
-            <Keyboard @keyup.prevent="handleInput"/>
+            <Keyboard />
         </div>
     </div>
 </template>
@@ -34,125 +34,127 @@ export default defineComponent({
         let stage: IWordleStage = reactive({
             "currentIndex": 0,
             "currentStage": {
-                guess: "cran",
+                guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             },
             "stageValue": [{
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }, {
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }, {
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }, {
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }, {
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }, {
                 guess: "",
                 correctness: [
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong,
-                    LetterFrameState.Wrong
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None,
+                    LetterFrameState.None
                 ]
             }
             ]
         });
         let wordGuessValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
-            let guessLetters: Array<string> = stage.currentStage.guess.split('');
-            let result: Array<ILetterFrame> = guessLetters.map((x, i) => {
+            let result: Array<ILetterFrame> = stage.currentStage.correctness.map((x, i) => {
                 return {
-                    "content": x,
-                    "state": stage.currentStage.correctness[i]
+                    "content": stage.currentStage.guess[i],
+                    "state": x
                 }
             });
-
             return result;
         });
 
-        function handleInput(e: KeyboardEvent): void {
-            let key: string = '';
-            switch (e.key) {
-                case "Backspace":
-                    key = "{bksp}";
-                    break;
-                case "Enter":
-                    key = "{enter}";
-                    break;
-                default:
-                    key = e.key;
-                    break;
-            }
-
-            if (key == "{enter}" && stage.currentIndex < 6 && stage.currentStage.guess.length == 5) {
+        function handleInput(key: string): void {
+            if (key === "{enter}" && stage.currentIndex < 6 && stage.currentStage.guess.length == 5) {
                 stage.stageValue[stage.currentIndex] = stage.currentStage;
                 stage.currentIndex++;
-            } else if (key == "{bksp}" && stage.currentStage.guess.length > 0) {
-                console.log(stage.currentStage.guess.slice(0, -1));
+                stage.currentStage = {
+                    guess: "",
+                    correctness: [
+                        LetterFrameState.None,
+                        LetterFrameState.None,
+                        LetterFrameState.None,
+                        LetterFrameState.None,
+                        LetterFrameState.None
+                    ]
+                };
+            } else if (key === "{bksp}" && stage.currentStage.guess.length > 0) {
                 stage.currentStage.guess = stage.currentStage.guess.slice(0, -1);
             } else if (stage.currentStage.guess.length < 5) {
-                alphaKeyHandler(key);
-            }
-        }
+                const alphaKeys = /[a-zA-Z]/;
 
-        function alphaKeyHandler(key: any): void {
-            const alphaKeys = /[a-zA-Z]/;
-
-            if (alphaKeys.test(key)) {
-                stage.currentStage.guess += key;
+                if (alphaKeys.test(key)) {
+                    stage.currentStage.guess += key;
+                }
             }
         }
 
         onMounted(() => {
             window.addEventListener("keyup", (e) => {
                 e.preventDefault();
-                handleInput(e);
+                let key: string = '';
+                switch (e.key) {
+                    case "Backspace":
+                        key = "{bksp}";
+                        break;
+                    case "Enter":
+                        key = "{enter}";
+                        break;
+                    default:
+                        key = e.key;
+                        break;
+                }
+                handleInput(key);
             });
         });
 
-        return {stage, handleInput, wordGuessValue}
+        return {stage, wordGuessValue}
     }
 })
 </script>
