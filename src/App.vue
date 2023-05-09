@@ -1,21 +1,46 @@
 <template>
     <div class="app">
-        <div>
-
-        </div>
-        <div class="flex flex-col h-max max-w-md mx-auto justify-evenly">
-            <div>
-                <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-                    <div v-for="(value,index) in wordGuessValue" :key="index"
-                         class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
-                        <span class="text-2xl font-bold">{{ value.content }}</span>
+        <div class="flex flex-col h-max max-w-xl mx-auto justify-evenly items-center">
+            <div class="grid grid-rows-4 grid-cols-5 gap-3 w-full max-h-fit p-5">
+                <div class="row-span-1 col-span-5 drop-shadow-xl ">
+                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
+                        <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
+                            <div v-for="(value,index) in wordGuessValue" :key="index"
+                                 class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
+                                <span class="text-2xl font-bold">{{ value.content }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-span-2 col-span-2 drop-shadow-xl">
+                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
+                        <div class="p-1">
+                            <span class="font-semibold text-gray-200">
+                              Magic Wand
+                            </span>
+                        </div>
+                        <div class="p-1">
+                            <span class="font-semibold text-gray-200">
+                              Wordle Words
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-span-2 col-span-3 max-h-fit drop-shadow-xl">
+                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
+                        <div class="p-1">
+                          <span class="font-semibold text-gray-200">
+                                <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-span-1 col-span-5 drop-shadow-xl">
+                    <div class="border-2 border-slate-700/25 rounded-lg p-1 bg-slate-800">
+                        <Keyboard/>
                     </div>
                 </div>
             </div>
-            <div>
-                <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
-            </div>
-            <Keyboard />
         </div>
     </div>
 </template>
