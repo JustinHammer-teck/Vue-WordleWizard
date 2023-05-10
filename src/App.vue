@@ -1,18 +1,8 @@
 <template>
     <div class="app">
-        <div class="flex flex-col h-max max-w-xl mx-auto justify-evenly items-center">
+        <div class="flex flex-col h-auto max-w-xl mx-auto justify-evenly items-center">
             <div class="grid grid-rows-4 grid-cols-5 gap-3 w-full max-h-fit p-5">
-                <div class="row-span-1 col-span-5 drop-shadow-xl ">
-                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
-                        <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-                            <div v-for="(value,index) in wordGuessValue" :key="index"
-                                 class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
-                                <span class="text-2xl font-bold">{{ value.content }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-span-2 col-span-2 drop-shadow-xl">
+                <div class="row-span-3 col-span-2 drop-shadow-xl h-16">
                     <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
                         <div class="p-1">
                             <span class="font-semibold text-gray-200">
@@ -26,13 +16,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row-span-1 col-end-6 col-span-3  drop-shadow-xl ">
+                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
+                        <NextWord :values="stage.currentStage"/>
+                    </div>
+                </div>
                 <div class="row-span-2 col-span-3 max-h-fit drop-shadow-xl">
                     <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-slate-800">
-                        <div class="p-1">
-                          <span class="font-semibold text-gray-200">
-                                <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
-                          </span>
-                        </div>
+                        <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
                     </div>
                 </div>
                 <div class="row-span-1 col-span-5 drop-shadow-xl">
@@ -51,10 +42,11 @@ import Keyboard from './components/Keyboard.vue';
 import IWordleStage from './types/IWordleStage';
 import LetterFrameState from './enums/LetterFrameState';
 import ILetterFrame from "./types/ILetterFrame";
+import NextWord from "./components/NextWord.vue";
 
 export default defineComponent({
     name: "App",
-    components: {WordFrame, Keyboard},
+    components: {WordFrame, NextWord, Keyboard},
     setup() {
         let stage: IWordleStage = reactive({
             "currentIndex": 0,
@@ -125,15 +117,6 @@ export default defineComponent({
             }
             ]
         });
-        let wordGuessValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
-            let result: Array<ILetterFrame> = stage.currentStage.correctness.map((x, i) => {
-                return {
-                    "content": stage.currentStage.guess[i],
-                    "state": x
-                }
-            });
-            return result;
-        });
 
         function handleInput(key: string): void {
             if (key === "{enter}" && stage.currentIndex < 6 && stage.currentStage.guess.length == 5) {
@@ -179,7 +162,7 @@ export default defineComponent({
             });
         });
 
-        return {stage, wordGuessValue}
+        return {stage}
     }
 })
 </script>
