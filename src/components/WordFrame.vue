@@ -34,6 +34,6 @@ export default defineComponent({
 
 <template>
     <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-        <LetterFrame v-for="(value, index) in letterFrameValue" :key=index :letterFrame="value"/>
+        <LetterFrame v-for="(value, index) in letterFrameValue" :key=index :clickAble="false" :letterFrame="value"/>
     </div>
 </template>    
