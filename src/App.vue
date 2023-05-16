@@ -1,42 +1,63 @@
 <template>
-    <div class="app">
-        <div>
-
-        </div>
-        <div class="flex flex-col h-max max-w-md mx-auto justify-evenly">
-            <div>
-                <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-                    <div v-for="(value,index) in wordGuessValue" :key="index"
-                         class="col-span-1 flex items-center justify-center h-16 uppercase border-2 border-gray-200">
-                        <span class="text-2xl font-bold">{{ value.content }}</span>
+                <div class="app bg-zinc-900">
+                    <header class="bg-zinc-800">
+                        <nav class="mx-auto flex max-w-7xl justify-center p-4 " aria-label="Global">
+                            <div class="font-semibold text-zinc-300 text-2xl" >AWORDLE VVIZARD</div>
+                        </nav>
+                    </header>
+                        <div class="flex flex-col h-auto max-w-xl mx-auto justify-evenly items-center">
+                            <div class="grid grid-rows-4 grid-cols-5 gap-3 w-full max-h-fit p-5">
+                                <div class="row-span-3 col-span-2 drop-shadow-xl h-16">
+                                    <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-zinc-900">
+                                    <div class="p-1">
+                                        <span class="font-semibold text-zinc-300">
+                                          Wordle Helper
+                                        </span>
+                                    </div>
+                                    <div class="p-1">
+                                        <span class="font-semibold text-zinc-300">
+                                          Wordle Words
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-span-1 col-end-6 col-span-3  drop-shadow-xl ">
+                                <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-zinc-900">
+                                    <NextWord :values="stage.currentStage"/>
+                                </div>
+                            </div>
+                            <div class="row-span-2 col-span-3 max-h-fit drop-shadow-xl">
+                                <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-zinc-900">
+                                    <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
+                                </div>
+                            </div>
+                            <div class="row-span-1 col-span-5 drop-shadow-xl">
+                                <div class="border-2 border-slate-700/25 rounded-lg p-1 bg-zinc-900">
+                        <Keyboard/>
                     </div>
                 </div>
             </div>
-            <div>
-                <WordFrame v-for="(value, index) in stage.stageValue" :key=index :value="value"/>
-            </div>
-            <Keyboard />
         </div>
     </div>
 </template>
 <script lang="ts">
-import {defineComponent, ref, onMounted, reactive, ComputedRef, computed} from 'vue';
+import { defineComponent, onMounted, reactive } from 'vue';
 import WordFrame from './components/WordFrame.vue';
 import Keyboard from './components/Keyboard.vue';
 import IWordleStage from './types/IWordleStage';
 import LetterFrameState from './enums/LetterFrameState';
-import ILetterFrame from "./types/ILetterFrame";
+import NextWord from "./components/NextWord.vue";
 
 export default defineComponent({
     name: "App",
-    components: {WordFrame, Keyboard},
+    components: {WordFrame, NextWord, Keyboard},
     setup() {
         let stage: IWordleStage = reactive({
             "currentIndex": 0,
             "currentStage": {
                 guess: "",
                 correctness: [
-                    LetterFrameState.None,
+                    LetterFrameState.CorrectPlc,
                     LetterFrameState.None,
                     LetterFrameState.None,
                     LetterFrameState.None,
@@ -100,15 +121,6 @@ export default defineComponent({
             }
             ]
         });
-        let wordGuessValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
-            let result: Array<ILetterFrame> = stage.currentStage.correctness.map((x, i) => {
-                return {
-                    "content": stage.currentStage.guess[i],
-                    "state": x
-                }
-            });
-            return result;
-        });
 
         function handleInput(key: string): void {
             if (key === "{enter}" && stage.currentIndex < 6 && stage.currentStage.guess.length == 5) {
@@ -124,7 +136,7 @@ export default defineComponent({
                         LetterFrameState.None
                     ]
                 };
-            } else if (key === "{bksp}" && stage.currentStage.guess.length > 0) {
+            } else if (key === "{bksp}") {
                 stage.currentStage.guess = stage.currentStage.guess.slice(0, -1);
             } else if (stage.currentStage.guess.length < 5) {
                 const alphaKeys = /[a-zA-Z]/;
@@ -154,7 +166,7 @@ export default defineComponent({
             });
         });
 
-        return {stage, wordGuessValue}
+        return {stage}
     }
 })
 </script>
