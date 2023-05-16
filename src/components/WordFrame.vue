@@ -17,7 +17,7 @@ export default defineComponent({
             let result: Array<ILetterFrame> = props.value.correctness.map((x, i) => {
                 return {
                     "content": props.value.guess[i],
-                    "state": x
+                    "state": x == 3 ? 2 : x
                 }
             });
 
@@ -28,8 +28,6 @@ export default defineComponent({
         }
     }
 })
-
-
 </script>
 
 <template>

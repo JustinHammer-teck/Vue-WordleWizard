@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, ref, onMounted, defineEmits, watch} from 'vue';
+import {defineComponent, ref, onMounted} from 'vue';
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 
@@ -16,16 +16,8 @@ export default defineComponent({
     setup(props, ctx) {
         const keyboard = ref<Keyboard>();
 
-        function OnKeyPress(button: any) {
-            ctx.emit('onKeyPress', button);
-            console.log("on press : " + button);
-        }
-
-        function OnChange(input: string) {
-            if (input.length < 6) {
-                ctx.emit('onChange', input);
-            }
-            console.log("on change : " + input);
+        function OnKeyPress(button: string) {
+            ctx.emit('OnKeyPress', button);
         }
 
         onMounted(() => {
@@ -38,42 +30,18 @@ export default defineComponent({
                     ]
                 },
                 theme: "hg-theme-default myTheme1",
-                onChange: OnChange,
                 onKeyPress: OnKeyPress
             });
         });
 
-    }
+    }, emits : ["OnKeyPress"]
 })
 </script>
 
 <style scoped>
-.simple-keyboard.myTheme1 {
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 0;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
 
-.simple-keyboard.myTheme1 .hg-button {
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5) !important;
-    color: (1, 1, 1, 0.4);
-}
-
-.simple-keyboard.myTheme1 .hg-button:active {
-    background: #1c4995;
-    color: white;
-}
-
-#root .simple-keyboard.myTheme1+.simple-keyboard-preview {
-    background: #1c4995;
-}
 </style>
 
 <template>
-                                <div class="simple-keyboard"></div>
+    <div class="simple-keyboard"></div>
 </template>

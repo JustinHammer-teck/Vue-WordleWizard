@@ -11,7 +11,7 @@ export default defineComponent({
             required: true,
             type: Object as PropType<IWordGuess>
         },
-    }, setup(props) {
+    }, setup(props, context) {
         let wordGuessValue: ComputedRef<Array<ILetterFrame>> = computed(() => {
             let result: Array<ILetterFrame> = props.values.correctness.map((x, i) => {
                 return {
@@ -23,13 +23,17 @@ export default defineComponent({
             return result;
         });
 
-        return {wordGuessValue}
-    }
+        // const emit= defineEmits(["changeState"])
+        const changeStageOnIndex = (index : number) =>  {
+            context.emit("newStateIndex" , index);
+        };
+        return {wordGuessValue, props, changeStageOnIndex}
+    }, emits : ["newStateIndex"]
 })
 
 </script>
 <template>
     <div class="grid max-w-xs grid-cols-5 gap-1 mx-auto mb-1">
-        <LetterFrame v-for="(value, index) in wordGuessValue" :key=index :clickAble="true" :letterFrame="value"/>
+        <LetterFrame v-for="(value, index) in wordGuessValue" @click="changeStageOnIndex(index)" :key=index :clickAble="true" :letterFrame="value"/>
     </div>
 </template>
