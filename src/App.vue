@@ -1,8 +1,8 @@
 <template>
                 <div class="app bg-zinc-900">
-                    <header class="bg-zinc-900">
+                    <header class="bg-zinc-800">
                         <nav class="mx-auto flex max-w-7xl justify-center p-4 " aria-label="Global">
-                            <div class="font-semibold text-zinc-300 text-2xl" >ANOTHER WORDLE SOLVER</div> 
+                            <div class="font-semibold text-zinc-300 text-2xl" >AWORDLE VVIZARD</div>
                         </nav>
                     </header>
                         <div class="flex flex-col h-auto max-w-xl mx-auto justify-evenly items-center">
@@ -11,7 +11,7 @@
                                     <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-zinc-900">
                                     <div class="p-1">
                                         <span class="font-semibold text-zinc-300">
-                                          Magic Wand
+                                          Wordle Helper
                                         </span>
                                     </div>
                                     <div class="p-1">

@@ -33,7 +33,7 @@ export default defineComponent({
 </script>
 
 <template>
-        <div :on-click="changeState" class="col-span-1 flex items-center justify-center h-14 uppercase border-2 border-zinc-700"
+        <div class="col-span-1 flex items-center justify-center h-14 uppercase border-2 border-zinc-700"
             :class="{ 'cursor-pointer': clickAble && props.letterFrame.content, 'bg-green-600': isCrtPLace, 'bg-amber-600': isMissPlc, 'bg-sky-600': isWrong }">
             <span class="text-2xl font-bold text-zinc-200">{{ letterFrame.content }}</span> 
     </div>
