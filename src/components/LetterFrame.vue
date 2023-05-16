@@ -16,13 +16,13 @@ export default defineComponent({
     },
     setup(props) {
         let isCrtPLace = computed(() => {
-            return props.letterFrame.state === LetterFrameState.CorrectPlc
+            return props.letterFrame.content && props.letterFrame.state === LetterFrameState.CorrectPlc
         });
         let isMissPlc = computed(() => {
-            return props.letterFrame.state === LetterFrameState.MissPlc
+            return props.letterFrame.content && props.letterFrame.state === LetterFrameState.MissPlc
         });
         let isWrong = computed(() => {
-            return props.letterFrame.state === LetterFrameState.Wrong
+            return props.letterFrame.content && props.letterFrame.state === LetterFrameState.Wrong
         });
 
         return {

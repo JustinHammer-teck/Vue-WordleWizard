@@ -81,9 +81,8 @@ export default defineComponent({
         });
 
         function handleInput(key: string): void {
-            console.log(key);
             if (key == "{enter}") {
-                if (stage.currentStage.guess.length > 6) {
+                if (stage.currentStage.guess.length < 5) {
                     return;
                 }
                 if (stage.currentStage.guess.length == 5) {
@@ -146,10 +145,10 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="app bg-zinc-900">
+    <div class="app bg-zinc-900 h-screen">
         <header class="bg-zinc-800">
             <nav class="mx-auto flex max-w-7xl justify-center p-4 " aria-label="Global">
-                <div class="font-semibold text-zinc-300 text-2xl">AWORDLE VVIZARD</div>
+                <div class="font-semibold text-zinc-300 text-2xl">WORDLE VVIZARD</div>
             </nav>
         </header>
         <div class="flex flex-col h-auto max-w-xl mx-auto justify-evenly items-center">
