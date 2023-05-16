@@ -124,7 +124,7 @@ export default defineComponent({
         onMounted(() => {
             window.addEventListener("keyup", (e) => {
                 e.preventDefault();
-                let key: string = '';
+                let key: string = "";
                 switch (e.key) {
                     case "Backspace":
                         key = "{bksp}";
