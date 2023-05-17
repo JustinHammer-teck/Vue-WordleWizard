@@ -6,8 +6,7 @@
     <a href="#contributors">Contributors</a>
 </p>
 
-[![wakatime](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/173b4103-418d-4c11-a8e7-f6f517f66672.svg)](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/173b4103-418d-4c11-a8e7-f6f517f66672)
-
+[![wakatime](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/c393e694-01bf-46b0-96ec-e9b5b71c7211.svg)](https://wakatime.com/badge/user/e8bb07f7-2c8e-4e41-9b2c-ae73205a1c83/project/c393e694-01bf-46b0-96ec-e9b5b71c7211)
 # Overview
 
 This repository contains the source code for the Wordle Solver. The site is written using [Vue 3](https://vuejs.org/), [TypeScript](https://typescriptlang.org/) and [Tailwind](https://tailwindcss.com/), and deployed within my homelab infrastruture.
