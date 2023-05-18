@@ -1,8 +1,7 @@
 import LetterFrameState from "../enums/LetterFrameState"
 
-interface ILetterFrame {
+export default interface ILetterFrame {
     content : string,
     state : LetterFrameState,
 }
 
-export default ILetterFrame

@@ -10,7 +10,7 @@ export default async function processWordsService(resourceUrl: string, data: any
         body: JSON.stringify(data)
     })
         .then(response => {
-            if( response.status != 201 ){
+            if( response.status != 200 ){
                 throw response.status;
             }else{
                 return response.json();
