@@ -1,14 +1,15 @@
 <script lang="ts">
-import {defineComponent, onMounted, reactive} from 'vue';
+import {defineComponent, onMounted, reactive, ref} from 'vue';
 import WordFrame from './components/WordFrame.vue';
 import Keyboard from './components/Keyboard.vue';
 import IWordleStage from './types/IWordleStage';
 import LetterFrameState from './enums/LetterFrameState';
 import NextWord from "./components/NextWord.vue";
+import HelperWord from "./components/HelperWord.vue";
 
 export default defineComponent({
     name: "App",
-    components: {WordFrame, NextWord, Keyboard},
+    components: {HelperWord, WordFrame, NextWord, Keyboard},
     setup() {
         let stage: IWordleStage = reactive<IWordleStage>({
             currentIndex: 0,
@@ -80,6 +81,32 @@ export default defineComponent({
             ]
         });
 
+        let helperWord = ref("crane");
+
+        let wordleGuessWord = ref(["notes",
+            "resin",
+            "tares",
+            "senor",
+            "aloft",
+            "clear",
+            "guilt",
+            "crane",
+            "train",
+            "slant",
+            "crate",
+            "trace",
+            "print",
+            "trice",
+            "leant",
+            "slate",
+            "crone",
+            "plant",
+            "blast",
+            "plate",
+            "plant",
+            "blast",
+            "plate"]);
+
         function handleInput(key: string): void {
             if (key == "{enter}") {
                 if (stage.currentStage.guess.length < 5) {
@@ -112,6 +139,14 @@ export default defineComponent({
             }
         }
 
+        function castHelperWord() {
+            stage.currentStage.guess = helperWord.value;
+        }
+
+        function castWordleWord(guessWord: string) {
+            stage.currentStage.guess = guessWord;
+        }
+
         const updateState = (newStateIndex: number) => {
             if (stage.currentStage.correctness[newStateIndex] < 3) {
                 stage.currentStage.correctness[newStateIndex] = stage.currentStage.correctness[newStateIndex] + 1;
@@ -139,7 +174,15 @@ export default defineComponent({
             });
         });
 
-        return {stage, updateState, handleInput}
+        return {
+            stage,
+            wordleGuessWord,
+            helperWord,
+            updateState,
+            handleInput,
+            castHelperWord,
+            castWordleWord
+        }
     }
 })
 </script>
@@ -153,17 +196,27 @@ export default defineComponent({
         </header>
         <div class="flex flex-col h-auto max-w-xl mx-auto justify-evenly items-center">
             <div class="grid grid-rows-4 grid-cols-5 gap-3 w-full max-h-fit p-5">
-                <div class="row-span-3 col-span-2 drop-shadow-xl h-16">
+                <div class="row-span-3 col-span-2 drop-shadow-xl h-4/5 ">
                     <div class="border-2 border-slate-700/25 rounded-lg p-2 bg-zinc-900">
                         <div class="p-1">
                             <span class="font-semibold text-zinc-300">
                               Wordle Helper
                             </span>
                         </div>
+                        <div @click="castHelperWord"
+                             class="flex justify-center px-4 py-3 cursor-pointer text-zinc-300 text-xl font-semibold">
+                            {{ helperWord }}
+                        </div>
                         <div class="p-1">
                             <span class="font-semibold text-zinc-300">
                               Wordle Words
                             </span>
+                        </div>
+                        <div class="flex flex-wrap items-stretch justify-center overflow-auto">
+                            <div class="px-4 py-3 cursor-pointer text-zinc-300 text-xl font-semibold"
+                                 v-for="(value, index) in wordleGuessWord" @click="castWordleWord(value)" :key="index">
+                                {{ value }}
+                            </div>
                         </div>
                     </div>
                 </div>
