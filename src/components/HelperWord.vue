@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import {computed} from "vue";
 
-const props = defineProps({
+let props = defineProps({
     helperWord: {type: String, required: true},
 })
 
-function castHelperWord() {
-    props.helperWord.value = computed(() => {
+const emit = defineEmits<{
+    (event: 'guessWord', value: string): void,
+}>()
 
-    });
+const castHelperWord = () => {
+    emit('guessWord', props.helperWord);
 }
 </script>
+
 
 <template>
     <div class="p-1">
         <span class="font-semibold text-zinc-300">
-          Wordle Helper
+            Helper
         </span>
     </div>
     <div @click="castHelperWord"
