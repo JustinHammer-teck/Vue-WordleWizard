@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent,onBeforeMount, onMounted, reactive, ref} from 'vue';
+import {defineComponent, onBeforeMount, onMounted, reactive, ref} from 'vue';
 import WordFrame from './components/WordFrame.vue';
 import Keyboard from './components/Keyboard.vue';
 import IWordleStage from './types/IWordleStage';
@@ -84,29 +84,7 @@ export default defineComponent({
 
         let helperWord = ref("");
 
-        let wordleGuessWords = ref(["notes",
-            "resin",
-            "tares",
-            "senor",
-            "aloft",
-            "clear",
-            "guilt",
-            "crane",
-            "train",
-            "slant",
-            "crate",
-            "trace",
-            "print",
-            "trice",
-            "leant",
-            "slate",
-            "crone",
-            "plant",
-            "blast",
-            "plate",
-            "plant",
-            "blast",
-            "plate"]);
+        let wordleGuessWords = ref([]);
 
         function handleInput(key: string): void {
             if (key == "{enter}") {
@@ -191,14 +169,14 @@ export default defineComponent({
     <div class="app bg-zinc-900 h-full">
         <header class="bg-zinc-800">
             <nav class="flex w-full max-w-full justify-between p-4" aria-label="Global">
-                <div>
+                <div class="hover:cursor-pointer">
                     <a href="https://github.com/JustinHammer-teck/" target="_blank" rel="noreferrer">
-                        <img src="https://github.com/JustinHammer-teck.png" style="border-radius: 50%;" width="40"
+                        <img src="https://github.com/JustinHammer-teck.png" style="border-radius: 50%; cursor: pointer" width="40"
                              height="40" alt="github-image">
                     </a>
                 </div>
                 <div class="font-semibold text-zinc-300 text-2xl">WORDLE VVIZARD</div>
-                <div>
+                <div class="hover:cursor-pointer">
                     <a href="https://github.com/JustinHammer-teck/Vue-WordleWizard" target="_blank" rel="noreferrer">
                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
                              width="30" height="25" alt="github logo"/>
